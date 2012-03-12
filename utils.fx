@@ -47,3 +47,23 @@ float4 tex2Dlod_bilinear(sampler textureSampler, float4 uv, float textureSize, f
 	float4 tB = lerp(height01, height11, f.x);
 	return lerp(tA, tB, f.y);
 };
+
+float4 GenerateNormalMap(sampler2D tex, float2 uv, float textureSize, float normalStrength)
+{
+   float texelSize = 1.0f / textureSize;
+   
+    float tl = abs(tex2D (tex, uv + texelSize * float2(-1, -1)).x);   // top left
+    float  l = abs(tex2D (tex, uv + texelSize * float2(-1,  0)).x);   // left
+    float bl = abs(tex2D (tex, uv + texelSize * float2(-1,  1)).x);   // bottom left
+    float  t = abs(tex2D (tex, uv + texelSize * float2( 0, -1)).x);   // top
+    float  b = abs(tex2D (tex, uv + texelSize * float2( 0,  1)).x);   // bottom
+    float tr = abs(tex2D (tex, uv + texelSize * float2( 1, -1)).x);   // top right
+    float  r = abs(tex2D (tex, uv + texelSize * float2( 1,  0)).x);   // right
+    float br = abs(tex2D (tex, uv + texelSize * float2( 1,  1)).x);   // bottom right
+   
+    float dX = tr + 2*r + br -tl - 2*l - bl;
+    float dY = bl + 2*b + br -tl - 2*t - tr;
+    
+    float4 N = float4(normalize(float3(-dX, 1.0f / normalStrength, -dY)), 1.0f);
+    return N;
+};

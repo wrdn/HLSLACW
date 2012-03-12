@@ -1,0 +1,2 @@
+Mountain Heightmap, modified version of: http://johnflower.org/sites/default/files/Mt%20Ruapehu%20and%20Mt%20Ngauruhoe.png
+rock.dds, sand.dds, snow.dds, grass.dds, waterbump.dds: http://www.riemers.net/eng/Tutorials/XNA/Csharp/series4.php
