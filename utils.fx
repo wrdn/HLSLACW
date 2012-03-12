@@ -33,3 +33,17 @@ float4x4 build_rotation_matrix(float angle_in_degs, float xAxis, float yAxis, fl
 		0, 0, 0, 1     // m41, m42, m43, m44		
 	);
 };
+
+float4 tex2Dlod_bilinear(sampler textureSampler, float4 uv, float textureSize, float texelSize)
+{
+	float height00 = tex2Dlod(textureSampler, uv);
+	float height10 = tex2Dlod(textureSampler, uv + float4(texelSize,0,0,0));
+	float height01 = tex2Dlod(textureSampler, uv + float4(0, texelSize,0,0));
+	float height11 = tex2Dlod(textureSampler, uv + float4(texelSize,texelSize,0,0));
+	
+	float2 f = frac(uv.xy * textureSize);
+	
+	float4 tA = lerp(height00, height10, f.x);
+	float4 tB = lerp(height01, height11, f.x);
+	return lerp(tA, tB, f.y);
+};
