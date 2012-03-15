@@ -6,6 +6,16 @@
 float DEGTORAD(float degs) { return degs * PIOVER180; };
 float RADSTODEGS(float rads) { return rads * _180OVERPI; };
 
+float smoothsel(float a, float b, float c, float d, float t)
+{
+	return smoothstep(a,b,t)-smoothstep(c,d,t);
+}
+
+float lerpstep( float lower, float upper, float s )
+{
+   return saturate( ( s - lower )  / ( upper - lower ) );
+}
+
 float4x4 build_rotation_matrix(float angle_in_degs, float xAxis, float yAxis, float zAxis)
 {
 	float3 axis = normalize(float3(xAxis,yAxis,zAxis));
