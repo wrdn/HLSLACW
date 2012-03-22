@@ -3,8 +3,12 @@
 #define PIOVER180 PI/180.0f;
 #define _180OVERPI 180.0f/PI
 
+/*
+// These functions are not needed as HLSL includes degrees(rads) and radians(degs) functions
+// to do conversion
 float DEGTORAD(float degs) { return degs * PIOVER180; };
 float RADSTODEGS(float rads) { return rads * _180OVERPI; };
+*/
 
 float smoothsel(float a, float b, float c, float d, float t)
 {
@@ -20,7 +24,7 @@ float4x4 build_rotation_matrix(float angle_in_degs, float xAxis, float yAxis, fl
 {
 	float3 axis = normalize(float3(xAxis,yAxis,zAxis));
 	float x = axis.x, y = axis.y, z = axis.z;
-	float angle = DEGTORAD(angle_in_degs);
+	float angle = radians(angle_in_degs);
 	float c = cos(angle), s = sin(angle);
 	
 	return float4x4
